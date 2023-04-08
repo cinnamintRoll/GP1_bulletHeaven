@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     private float speed = 100.0f;
     private Rigidbody playerRb;
     private float zBound = 7;
+    public GameObject projectilePrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour
     {
         MovePlayer();
         ConstrainPlayerPosition();
+        ShootBullets();
     }
     void MovePlayer()
     {
@@ -38,6 +40,21 @@ public class PlayerController : MonoBehaviour
         if (transform.position.z > zBound)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, zBound);
+        }
+    }
+
+    void ShootBullets()
+    {
+
+        // No longer necessary to Instantiate prefabs
+        // Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
+
+        // Get an object object from the pool
+        GameObject pooledProjectile = ObjectPooler.SharedInstance.GetPooledObject();
+        if (pooledProjectile != null)
+        {
+            pooledProjectile.SetActive(true); // activate it
+            pooledProjectile.transform.position = transform.position; // position it at player
         }
     }
     private void OnCollisionEnter(Collision collision)
