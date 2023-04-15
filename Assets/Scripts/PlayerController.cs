@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
-    private float speed = 100.0f;
+    public float health = 10f;
+    public float maxHealth = 20f;
+    private float speed = 150.0f;
     private Rigidbody playerRb;
     private float zBound = 7;
     public GameObject projectilePrefab;
