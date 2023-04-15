@@ -8,19 +8,17 @@ public class ScoreManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highscoreText;
 
-    int score = 0;
-    int highscore = 0;
-
-    // Start is called before the first frame update
     void Start()
     {
-        scoreText.text = score.ToString() + " Points";
-        highscoreText.text = "Highscore: " + highscore.ToString();
+        PlayerPrefs.SetInt("Score", 0);
+        PlayerPrefs.SetInt("HighScore", 0);
+
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        scoreText.text = $"SCORE: {PlayerPrefs.GetInt("Score")}";
+        highscoreText.text = $"HIGHSCORE: {PlayerPrefs.GetInt("Score")}";
     }
 }

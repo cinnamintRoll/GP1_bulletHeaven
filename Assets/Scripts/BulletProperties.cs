@@ -4,10 +4,19 @@ public class BulletProperties : MonoBehaviour
 {
     public float speed = 40.0f;
     private float topBound = 15f;
+    public ScoreManager score;
 
     // Update is called once per frame
     void Update()
     {
+        RaycastHit hit; 
+        Physics.Raycast(this.transform.position, transform.TransformDirection(Vector3.forward), out hit, 1.5f, LayerMask.GetMask("Enemy"));
+
+        if (hit.collider)
+        {
+            PlayerPrefs.SetInt("Score", PlayerPrefs.GetInt("Score") + 10);
+            Destroy(hit.collider.gameObject);
+        }
         MoveForward();
         DestroyOutofBounds();
     }
