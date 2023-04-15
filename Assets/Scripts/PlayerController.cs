@@ -2,16 +2,26 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
     private float speed = 100.0f;
     private Rigidbody playerRb;
     private float zBound = 7;
     public GameObject projectilePrefab;
 
+    //Player Health Variables - DORADO
+
+    public int maxHealth = 100;
+    public int currenHealth;
+    public HealthBar healthbar;
+
     // Start is called before the first frame update
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
+
+        //Player Health
+
+        currenHealth = maxHealth;
+        healthbar.setMaxH(maxHealth);
     }
 
     // Update is called once per frame
@@ -20,6 +30,18 @@ public class PlayerController : MonoBehaviour
         MovePlayer();
         ConstrainPlayerPosition();
         ShootBullets();
+        
+        // Player Health Damage Tester
+         if (Input.GetKeyDown(KeyCode.Space))
+            {
+                TakeDamage(15);
+            }
+    }
+
+    void TakeDamage(int damage)
+    {
+        currenHealth -= damage;
+        healthbar.setHealth(currenHealth);
     }
     void MovePlayer()
     {
@@ -62,6 +84,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Debug.Log("Player has collided with enemy.");
+            TakeDamage(15);
         }
     }
 
